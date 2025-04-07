@@ -61,7 +61,7 @@ const NewPatient = () => {
 
       const { data: patient, error } = await supabase
         .from('patients')
-        .insert([formattedData])
+        .insert(formattedData)
         .select()
         .single();
 
