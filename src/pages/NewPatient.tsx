@@ -53,10 +53,15 @@ const NewPatient = () => {
   const onSubmit = async (data: PatientFormValues) => {
     setIsSubmitting(true);
     try {
-      // Format date to string for Supabase
+      // Format date to string for Supabase and ensure required fields are present
       const formattedData = {
-        ...data,
+        first_name: data.first_name, // Explicitly include required fields
+        last_name: data.last_name,   // Explicitly include required fields
         date_of_birth: data.date_of_birth ? format(data.date_of_birth, 'yyyy-MM-dd') : null,
+        pesel: data.pesel || null,
+        phone: data.phone || null,
+        email: data.email || null,
+        address: data.address || null,
       };
 
       const { data: patient, error } = await supabase
