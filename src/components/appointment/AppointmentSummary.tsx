@@ -3,7 +3,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Patient, Service, Staff } from '@/types/supabase';
 import { Button } from '@/components/ui/button';
-import { Calendar, Clock, User, MedicalCross, CreditCard, CalendarCheck, Pencil } from 'lucide-react';
+import { Calendar, Clock, User, Stethoscope, CreditCard, CalendarCheck, Pencil } from 'lucide-react';
 import { format } from 'date-fns';
 import { pl } from 'date-fns/locale';
 import { Textarea } from '@/components/ui/textarea';
@@ -59,7 +59,7 @@ export function AppointmentSummary({
           <div className="bg-gray-50 p-4 rounded-lg">
             <div className="flex items-start justify-between">
               <div className="flex items-start">
-                <MedicalCross className="h-5 w-5 mr-2 text-health-600 mt-0.5" />
+                <Stethoscope className="h-5 w-5 mr-2 text-health-600 mt-0.5" />
                 <div>
                   <h3 className="font-medium">Usługa</h3>
                   <p className="text-sm">{service.name}</p>
