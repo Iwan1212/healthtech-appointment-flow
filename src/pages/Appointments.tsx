@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
@@ -7,11 +7,24 @@ import { Button } from '@/components/ui/button';
 import { CalendarIcon, ChevronLeft, ChevronRight, PlusCircle, Filter, ArrowUpDown } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
+import { Link, useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import { format } from 'date-fns';
+import { pl } from 'date-fns/locale';
 
 const Appointments = () => {
   const days = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek'];
   const timeSlots = ['8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'];
   const { toast } = useToast();
+  const navigate = useNavigate();
+  
+  const [loading, setLoading] = useState(true);
+  const [appointments, setAppointments] = useState([]);
+
+  useEffect(() => {
+    // W przyszłości implementacja pobierania rzeczywistych danych z Supabase
+    setLoading(false);
+  }, []);
 
   const mockAppointments = [
     { day: 'Poniedziałek', time: '9:00', patient: 'Jan Kowalski', service: 'Konsultacja', status: 'confirmed' },
@@ -23,10 +36,7 @@ const Appointments = () => {
   ];
 
   const handleBookAppointment = (day: string, time: string) => {
-    toast({
-      title: "Nowa wizyta",
-      description: `Dodawanie wizyty na ${day}, godz. ${time}`,
-    });
+    navigate('/appointments/new');
   };
 
   return (
@@ -64,7 +74,11 @@ const Appointments = () => {
                 <Filter className="h-4 w-4 mr-2" />
                 Filtruj
               </Button>
-              <Button size="sm" className="bg-health-600 hover:bg-health-700 text-white">
+              <Button 
+                size="sm" 
+                className="bg-health-600 hover:bg-health-700 text-white"
+                onClick={() => navigate('/appointments/new')}
+              >
                 <PlusCircle className="h-4 w-4 mr-2" />
                 Nowa wizyta
               </Button>
