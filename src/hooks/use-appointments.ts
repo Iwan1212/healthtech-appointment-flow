@@ -67,7 +67,28 @@ export function useAppointments(weekStart: Date) {
           return acc;
         }, {} as {[key: string]: Staff});
         
-        setAppointments(appointmentsData || []);
+        // Type check and conversion for the appointments data
+        const typedAppointments = appointmentsData?.map(appointment => {
+          // Ensure status is one of the allowed values in our type
+          let validStatus: Appointment['status'] = 'pending';
+          
+          // Check if the status from database matches any of our allowed types
+          if (
+            appointment.status === 'pending' || 
+            appointment.status === 'confirmed' || 
+            appointment.status === 'canceled' || 
+            appointment.status === 'completed'
+          ) {
+            validStatus = appointment.status as Appointment['status'];
+          }
+          
+          return {
+            ...appointment,
+            status: validStatus
+          } as Appointment;
+        }) || [];
+        
+        setAppointments(typedAppointments);
         setPatients(patientsMap);
         setServices(servicesMap);
         setStaff(staffMap);
